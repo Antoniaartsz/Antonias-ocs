@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Antonia's OCs</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Bungee', sans-serif;
+      background: /*https://png.pngtree.com/background/20210715/original/pngtree-yellow-floral-gouache-background-picture-image_1277192.jpg*/
+    }
+    .site-title {
+      text-align: center;
+      font-size: 3rem;
+      margin: 2rem 0 1rem;
+      color: #b59d55;
+      filter: drop-shadow(2px 2px 2px #f1e4a6);
+      letter-spacing: 2px;
+    }
+
+    .main-layout {
+      display: flex;
+      min-height: 82vh;
+      gap: 0;
+      background: none;
+    }
+
+    /* Vertical folder panel */
+    .folder-list {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      background: #fff9db;
+      box-shadow: 0 2px 10px #ffe08244;
+      padding: 36px 14px 44px 16px;
+      border-top-right-radius: 28px;
+      border-bottom-right-radius: 28px;
+      min-width: 180px;
+      max-width: 220px;
+      gap: 24px;
+      margin-right: 0.5rem;
+      border-right: 4px solid #ffd478;
+    }
+    .folder-btn {
+      font-size: 1.3em;
+      border-radius: 14px;
+      border: 3px solid #ffe082;
+      background: linear-gradient(90deg, #ffe482 75%, #faeac3 100%);
+      color: #ad9300;
+      font-weight: bold;
+      padding: 18px 10px;
+      box-shadow: 0 2px 8px #eddc8866;
+      margin-bottom: 0.2em;
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.22s, color 0.17s;
+      outline: none;
+      letter-spacing: 3px;
+    }
+    .folder-btn:hover, .folder-btn.selected {
+      background: linear-gradient(90deg, #ffeec1 35%, #fdf6c7 90%);
+      border-color: #ffd700;
+      color: #d4b83f;
+      box-shadow: 0 4px 14px #ffeec181;
+    }
+
+    /* OC Gallery on the right */
+    .ocs-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.2rem;
+      margin: 2rem 1.5rem;
+      background: none;
+    }
+
+    .oc-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 340px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #fffadc 70%, #faecc1 100%);
+      transition: box-shadow 0.3s, transform 0.3s, border 0.19s;
+      box-shadow: 0 2px 16px #ffefcc55;
+      border: 5px solid transparent;
+      z-index: 1;
+    }
+
+    .oc-card:hover {
+      box-shadow: 0 6px 28px #f3e0a488;
+      transform: translateY(-6px) scale(1.04);
+      border-color: #ffe08d;
+    }
+
+    /* Gold border for OCs */
+    .gold-border {
+      border: 5px solid #ffd700;
+      animation: goldGlow 1.3s infinite alternate;
+      box-shadow: 0 0 18px #ffd70066, 0 0 32px #fff6c066;
+    }
+    @keyframes goldGlow {
+      0% { box-shadow: 0 0 18px #ffd70077, 0 0 24px #fff6c099;}
+      100% { box-shadow: 0 0 30px #ffe082dd, 0 0 36px #fff9ea88;}
+    }
+    .leafy-border {
+      border: 5px solid #78c850;
+      box-shadow: 0 2px 20px 4px #aedc9f44;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      animation: leafyAnim 2s infinite alternate;
+    }
+    @keyframes leafyAnim {
+      0% { box-shadow: 0 0 15px 2px #aedc9f66;}
+      100% { box-shadow: 0 0 28px 8px #bfea8a88;}
+    }
+    .leafy-border::before,.leafy-border::after {
+      content: '';
+      position: absolute;
+      width: 44px;height:44px;
+      background: url('data:image/svg+xml;utf8,<svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg"><ellipse cx="22" cy="36" rx="18" ry="8" fill="%2378c850" /><ellipse cx="12" cy="10" rx="7" ry="4" fill="%2397da5e" /></svg>');
+      opacity:.38;z-index:2;
+    }
+    .leafy-border::before {left:0;top:0;}
+    .leafy-border::after {right:0;bottom:0;}
+    .animated-border {
+      border-image: linear-gradient(135deg, #e96479, #67e8f9, #fdb44b, #a7f064) 1;
+      box-shadow: 0 0 15px 2px #ffecec, 0 2px 16px 0px #fdb44b6e;
+      animation: borderAnim 2s linear infinite;
+    }
+    @keyframes borderAnim {
+      0% { border-image-source: linear-gradient(135deg, #e96479, #67e8f9, #fdb44b, #a7f064);}
+      50% { border-image-source: linear-gradient(135deg, #a7f064, #e96479, #fdb44b, #67e8f9);}
+      100% { border-image-source: linear-gradient(135deg, #e96479, #67e8f9, #fdb44b, #a7f064);}
+    }
+
+    .oc-img, .modal-img {
+      width: 215px;
+      height: 215px;
+      object-fit: contain;
+      border-radius: 18px;
+      background: #fffde9;
+      margin-bottom: 1.1rem;
+      box-shadow: 0 1px 14px #ffd7002c;
+      transition: box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .oc-name {
+      font-size: 1.5rem;
+      text-align: center;
+      color: #ad9300;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+      margin-top: 0;
+    }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: #00000064;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-content {
+      background: linear-gradient(135deg, #fffadc 80%, #faecc1 100%);
+      padding: 2rem 2rem 2.3rem 2rem;
+      border-radius: 32px;
+      width: 430px;
+      max-width: 97vw;
+      position: relative;
+      box-shadow: 0 3px 36px #ffd70066;
+      animation: fadeIn 0.6s;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 18px;
+      background: #ffd700;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 6px 22px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #ffd70088;
+      z-index:10;
+      font-weight:bold;
+    }
+    .close-btn:hover { background: #fec92c; }
+    /* Fullscreen image popup */
+    .picture-fullscreen {
+      position: fixed;
+      top:0; left:0; width:100vw; height:100vh;
+      background:#111a;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index: 10001;
+    }
+    .picture-fullscreen img {
+      width: calc(100vw - 60px);
+      max-width: 800px;
+      height: auto;
+      max-height: 92vh;
+      border-radius: 32px;
+      box-shadow: 0 6px 36px #ffd700a8, 0 1px 24px #ad93008c;
+      background:#fff;
+      animation: fadeIn .7s;
+      cursor: pointer;
+    }
+    .picture-fullscreen .close-btn {
+      top:24px; right:40px;
+      position:fixed; font-size:2.2em; padding:12px 28px; border-radius:50px;
+      background:#ffd700; box-shadow:0 3px 18px #ffd70099;
+    }
+  </style>
+</head>
+<body>
+  <h1 class="site-title">Antonia's OCs</h1>
+  <div class="main-layout">
+    <nav class="folder-list"></nav>
+    <div id="ocs-root"></div>
+  </div>
+  <div class="modal-overlay" id="oc-modal">
+    <div class="modal-content" id="oc-modal-content">
+      <button class="close-btn" id="close-modal">Close</button>
+    </div>
+  </div>
+  <!-- Fullscreen image popup -->
+  <div id="picture-fullscreen" class="picture-fullscreen">
+    <img src="" id="picture-fullscreen-img" />
+    <button class="close-btn" id="picture-fullscreen-close">Close</button>
+  </div>
+<script>
+const OC_DATA = {
+  plates_of_fate: [
+    {
+      id: "pof-1",
+      name: "Ruby",
+      img: "https://via.placeholder.com/500x500.png?text=Ruby",
+      about: "Gem-powered, spunky OC.",
+      border: "gold"
+    },
+    {
+      id: "pof-2",
+      name: "Aurora",
+      img: "https://via.placeholder.com/500x500.png?text=Aurora",
+      about: "Shimmering with pastel lights.",
+      border: "gold"
+    }
+  ],
+  rules_from_above: [
+    {
+      id: "rfa-1",
+      name: "Heavnix",
+      img: "https://via.placeholder.com/500x500.png?text=Heavnix",
+      about: "Celestial guardian.",
+      border: "gold"
+    }
+  ],
+  flowertale: [
+    {
+      id: "ft-1",
+      name: "Sunny",
+      img: "https://via.placeholder.com/500x500.png?text=Sunny",
+      about: "Bright and flowerful.",
+      border: "gold"
+    }
+  ],
+  random: [
+    {
+      id: "rnd-1",
+      name: "Pixel",
+      img: "https://via.placeholder.com/500x500.png?text=Pixel",
+      about: "Digital fox OC.",
+      border: "animated"
+    }
+  ],
+  sprunki: [],
+  eeveelution_au: [
+    {
+      id: "eevee-1",
+      name: "Thalor",
+      img: "https://media.discordapp.net/attachments/1276622422753284211/1435931484006383616/IMG_20251026_151559_114.jpg?ex=690dc2e8&is=690c7168&hm=257fb67368b091953f2489ccb554cbc85f9eabb0ae9a6ceb2183a0c12ef369ff&=&format=webp&width=1350&height=783",
+      about: "",
+      border: "leafy"
+    }
+  ]
+};
+
+const folderList = document.querySelector('.folder-list');
+const ocsRoot = document.getElementById('ocs-root');
+const modal = document.getElementById('oc-modal');
+const modalContent = document.getElementById('oc-modal-content');
+const closeModalBtn = document.getElementById('close-modal');
+
+// Fullscreen Picture
+const pictureFullscreenDiv = document.getElementById('picture-fullscreen');
+const pictureFullscreenImg = document.getElementById('picture-fullscreen-img');
+const pictureFullscreenClose = document.getElementById('picture-fullscreen-close');
+
+let currentFolder = null;
+
+// Create vertical folder buttons (left panel)
+Object.keys(OC_DATA).forEach(folder => {
+  const btn = document.createElement('button');
+  btn.textContent = folder.replace(/_/g, ' ');
+  btn.className = "folder-btn";
+  btn.onclick = () => {
+    currentFolder = folder;
+    renderOCs(folder);
+    document.querySelectorAll('.folder-btn').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+  };
+  folderList.appendChild(btn);
+});
+
+// Render OCs for selected folder in gallery
+function renderOCs(folder) {
+  ocsRoot.innerHTML = "";
+  const ocsDiv = document.createElement('div');
+  ocsDiv.className = "ocs-gallery";
+  OC_DATA[folder].forEach(oc => {
+    const card = document.createElement('div');
+    const borderType = oc.border || "gold";
+    card.className = [ "oc-card", borderType ].join(' ');
+    card.onclick = () => showModal(oc);
+    card.innerHTML = `
+      <img src="${oc.img}" alt="${oc.name}" class="oc-img" />
+      <div class="oc-name">${oc.name}</div>
+    `;
+    ocsDiv.appendChild(card);
+  });
+  ocsRoot.appendChild(ocsDiv);
+}
+
+// Show OC modal
+function showModal(oc) {
+  modalContent.className = (oc.border ? "modal-content " + oc.border : "modal-content gold");
+  modalContent.innerHTML = `
+    <button class="close-btn" id="close-modal">Close</button>
+    <h2 class="oc-name">${oc.name}</h2>
+    <img src="${oc.img}" alt="${oc.name}" class="modal-img" id="modal-oc-img"/>
+    <p>${oc.about || "No description yet!"}</p>
+  `;
+  modal.classList.add('active');
+  document.getElementById('close-modal').onclick = hideModal;
+  document.getElementById('modal-oc-img').onclick = function(e) {
+    showPictureFullscreen(oc.img);
+    e.stopPropagation();
+  };
+}
+
+// Hide modal
+function hideModal() {
+  modal.classList.remove('active');
+}
+
+// Picture fullscreen
+function showPictureFullscreen(imgUrl) {
+  pictureFullscreenDiv.style.display = "flex";
+  pictureFullscreenImg.src = imgUrl;
+}
+pictureFullscreenClose.onclick = function() {
+  pictureFullscreenDiv.style.display = "none";
+}
+
+// Optionally, open the first folder by default if you want:
+// renderOCs('plates_of_fate');
+// document.querySelectorAll('.folder-btn')[0].classList.add('selected');
+</script>
+</body>
+</html>
