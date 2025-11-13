@@ -6,11 +6,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
   <style>
+    /* Background uses the placeholder image URL you provided - replace with your own whenever ready */
     body {
       margin: 0;
       font-family: 'Bungee', sans-serif;
-      background: /*https://png.pngtree.com/background/20210715/original/pngtree-yellow-floral-gouache-background-picture-image_1277192.jpg*/
+      background: url("https://png.pngtree.com/background/20210715/original/pngtree-yellow-floral-gouache-background-picture-image_1277192.jpg") center/cover no-repeat fixed;
+      background-color: #fffbe7; /* fallback */
     }
+
     .site-title {
       text-align: center;
       font-size: 3rem;
@@ -32,7 +35,8 @@
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      background: #fff9db;
+      background: rgba(255, 249, 219, 0.95);
+      backdrop-filter: blur(4px);
       box-shadow: 0 2px 10px #ffe08244;
       padding: 36px 14px 44px 16px;
       border-top-right-radius: 28px;
@@ -57,6 +61,7 @@
       transition: background 0.25s, border-color 0.22s, color 0.17s;
       outline: none;
       letter-spacing: 3px;
+      text-transform: capitalize;
     }
     .folder-btn:hover, .folder-btn.selected {
       background: linear-gradient(90deg, #ffeec1 35%, #fdf6c7 90%);
@@ -72,6 +77,7 @@
       gap: 2.2rem;
       margin: 2rem 1.5rem;
       background: none;
+      flex: 1;
     }
 
     .oc-card {
@@ -80,15 +86,16 @@
       align-items: center;
       min-height: 340px;
       border-radius: 24px;
-      background: linear-gradient(135deg, #fffadc 70%, #faecc1 100%);
+      background: linear-gradient(135deg, rgba(255,250,220,0.9) 70%, rgba(250,236,193,0.9) 100%);
       transition: box-shadow 0.3s, transform 0.3s, border 0.19s;
-      box-shadow: 0 2px 16px #ffefcc55;
+      box-shadow: 0 2px 16px rgba(255,239,204,0.34);
       border: 5px solid transparent;
       z-index: 1;
+      padding: 18px;
     }
 
     .oc-card:hover {
-      box-shadow: 0 6px 28px #f3e0a488;
+      box-shadow: 0 6px 28px rgba(243,224,164,0.53);
       transform: translateY(-6px) scale(1.04);
       border-color: #ffe08d;
     }
@@ -97,23 +104,24 @@
     .gold-border {
       border: 5px solid #ffd700;
       animation: goldGlow 1.3s infinite alternate;
-      box-shadow: 0 0 18px #ffd70066, 0 0 32px #fff6c066;
+      box-shadow: 0 0 18px rgba(255,215,0,0.4), 0 0 32px rgba(255,246,192,0.4);
     }
     @keyframes goldGlow {
       0% { box-shadow: 0 0 18px #ffd70077, 0 0 24px #fff6c099;}
       100% { box-shadow: 0 0 30px #ffe082dd, 0 0 36px #fff9ea88;}
     }
+
     .leafy-border {
       border: 5px solid #78c850;
-      box-shadow: 0 2px 20px 4px #aedc9f44;
+      box-shadow: 0 2px 20px 4px rgba(174,220,159,0.27);
       position: relative;
       overflow: hidden;
       z-index: 1;
       animation: leafyAnim 2s infinite alternate;
     }
     @keyframes leafyAnim {
-      0% { box-shadow: 0 0 15px 2px #aedc9f66;}
-      100% { box-shadow: 0 0 28px 8px #bfea8a88;}
+      0% { box-shadow: 0 0 15px 2px rgba(174,220,159,0.4);}
+      100% { box-shadow: 0 0 28px 8px rgba(191,234,138,0.54);}
     }
     .leafy-border::before,.leafy-border::after {
       content: '';
@@ -124,9 +132,10 @@
     }
     .leafy-border::before {left:0;top:0;}
     .leafy-border::after {right:0;bottom:0;}
+
     .animated-border {
       border-image: linear-gradient(135deg, #e96479, #67e8f9, #fdb44b, #a7f064) 1;
-      box-shadow: 0 0 15px 2px #ffecec, 0 2px 16px 0px #fdb44b6e;
+      box-shadow: 0 0 15px 2px rgba(255,236,236,0.6), 0 2px 16px 0px rgba(253,180,75,0.43);
       animation: borderAnim 2s linear infinite;
     }
     @keyframes borderAnim {
@@ -136,13 +145,13 @@
     }
 
     .oc-img, .modal-img {
-      width: 215px;
-      height: 215px;
+      width: 260px;
+      height: 260px;
       object-fit: contain;
       border-radius: 18px;
       background: #fffde9;
       margin-bottom: 1.1rem;
-      box-shadow: 0 1px 14px #ffd7002c;
+      box-shadow: 0 1px 14px rgba(255,215,0,0.16);
       transition: box-shadow 0.3s;
       cursor: pointer;
     }
@@ -157,7 +166,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: #00000064;
+      background: rgba(0,0,0,0.42);
       display: none;
       align-items: center;
       justify-content: center;
@@ -167,13 +176,13 @@
       display: flex;
     }
     .modal-content {
-      background: linear-gradient(135deg, #fffadc 80%, #faecc1 100%);
+      background: linear-gradient(135deg, rgba(255,250,220,0.95) 80%, rgba(250,236,193,0.95) 100%);
       padding: 2rem 2rem 2.3rem 2rem;
       border-radius: 32px;
-      width: 430px;
+      width: 540px;
       max-width: 97vw;
       position: relative;
-      box-shadow: 0 3px 36px #ffd70066;
+      box-shadow: 0 3px 36px rgba(255,215,0,0.25);
       animation: fadeIn 0.6s;
     }
     .close-btn {
@@ -192,23 +201,25 @@
       font-weight:bold;
     }
     .close-btn:hover { background: #fec92c; }
+
     /* Fullscreen image popup */
     .picture-fullscreen {
       position: fixed;
       top:0; left:0; width:100vw; height:100vh;
-      background:#111a;
+      background: rgba(0,0,0,0.85);
       display:none;
       align-items:center;
       justify-content:center;
       z-index: 10001;
+      padding: 30px;
     }
     .picture-fullscreen img {
-      width: calc(100vw - 60px);
-      max-width: 800px;
+      width: calc(100vw - 120px);
+      max-width: 1100px;
       height: auto;
       max-height: 92vh;
-      border-radius: 32px;
-      box-shadow: 0 6px 36px #ffd700a8, 0 1px 24px #ad93008c;
+      border-radius: 24px;
+      box-shadow: 0 6px 36px rgba(255,215,0,0.35), 0 1px 24px rgba(173,147,0,0.28);
       background:#fff;
       animation: fadeIn .7s;
       cursor: pointer;
@@ -218,25 +229,50 @@
       position:fixed; font-size:2.2em; padding:12px 28px; border-radius:50px;
       background:#ffd700; box-shadow:0 3px 18px #ffd70099;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px) scale(.995);}
+      to { opacity: 1; transform: translateY(0) scale(1);}
+    }
+
+    /* responsive tweaks */
+    @media (max-width: 900px) {
+      .folder-list { display: none; } /* hide left panel on small screens */
+      .ocs-gallery { margin: 1rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+      .oc-img { width: 200px; height: 200px; }
+      .modal-content { width: 92vw; padding: 1.4rem; }
+    }
   </style>
 </head>
 <body>
   <h1 class="site-title">Antonia's OCs</h1>
   <div class="main-layout">
-    <nav class="folder-list"></nav>
+    <nav class="folder-list" aria-label="OC folders"></nav>
     <div id="ocs-root"></div>
   </div>
-  <div class="modal-overlay" id="oc-modal">
+
+  <div class="modal-overlay" id="oc-modal" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="modal-content" id="oc-modal-content">
       <button class="close-btn" id="close-modal">Close</button>
     </div>
   </div>
+
   <!-- Fullscreen image popup -->
-  <div id="picture-fullscreen" class="picture-fullscreen">
-    <img src="" id="picture-fullscreen-img" />
+  <div id="picture-fullscreen" class="picture-fullscreen" aria-hidden="true">
+    <img src="" id="picture-fullscreen-img" alt="Full size OC image" />
     <button class="close-btn" id="picture-fullscreen-close">Close</button>
   </div>
+
 <script>
+/*
+  OC_DATA: add or edit objects here.
+  Each OC supports:
+    - id: unique id
+    - name: displayed name
+    - img: image URL
+    - about: description text
+    - border: one of "gold", "leafy", "animated" (or any CSS class present)
+*/
 const OC_DATA = {
   plates_of_fate: [
     {
@@ -244,14 +280,51 @@ const OC_DATA = {
       name: "Ruby",
       img: "https://via.placeholder.com/500x500.png?text=Ruby",
       about: "Gem-powered, spunky OC.",
-      border: "gold"
+      border: "gold-border"
     },
     {
       id: "pof-2",
       name: "Aurora",
       img: "https://via.placeholder.com/500x500.png?text=Aurora",
       about: "Shimmering with pastel lights.",
-      border: "gold"
+      border: "gold-border"
+    },
+    {
+      id: "pof-3",
+      name: "Pearl",
+      img: "https://png.pngtree.com/background/20210715/original/pngtree-yellow-floral-gouache-background-picture-image_1277192.jpg",
+      about: "Pearl — • Pearls ref sheet •
+
+Name: Pearl
+✦
+Role: One of the Six Soul Heroes
+✦
+Species: Eevee g half moth
+✦
+Sexuality: lesbian 
+✦
+Age:  20
+✦
+Really soft g caring person , she gets frightened easily and treats every creature with kindness , even if she is timid g scared she believes in her own determination!
+
+✨"Even the quietest soul can stand tall when it matters most."✨
+---------------------
+Powers:
+1: calm presence: can calm down any aggressive creature and unstable people just being near
+
+2: resilient glow: when she holds onto her determination she can resist more damage than her normal fragile body can
+
+3: wing shield: her wings can harden forming a shield against attacks
+
+4: hope: can create orbs to heal or guide people in need
+
+5: tentacles: warnning they are poisonous!
+
+6: petal scent: can mask scents or calm and confuse enemy with it to buy some time 
+-----------------------
+Backstory: [ unknown ]
+",
+      border: "gold-border"
     }
   ],
   rules_from_above: [
@@ -260,7 +333,7 @@ const OC_DATA = {
       name: "Heavnix",
       img: "https://via.placeholder.com/500x500.png?text=Heavnix",
       about: "Celestial guardian.",
-      border: "gold"
+      border: "gold-border"
     }
   ],
   flowertale: [
@@ -269,7 +342,7 @@ const OC_DATA = {
       name: "Sunny",
       img: "https://via.placeholder.com/500x500.png?text=Sunny",
       about: "Bright and flowerful.",
-      border: "gold"
+      border: "gold-border"
     }
   ],
   random: [
@@ -278,7 +351,7 @@ const OC_DATA = {
       name: "Pixel",
       img: "https://via.placeholder.com/500x500.png?text=Pixel",
       about: "Digital fox OC.",
-      border: "animated"
+      border: "animated-border"
     }
   ],
   sprunki: [],
@@ -288,7 +361,7 @@ const OC_DATA = {
       name: "Thalor",
       img: "https://media.discordapp.net/attachments/1276622422753284211/1435931484006383616/IMG_20251026_151559_114.jpg?ex=690dc2e8&is=690c7168&hm=257fb67368b091953f2489ccb554cbc85f9eabb0ae9a6ceb2183a0c12ef369ff&=&format=webp&width=1350&height=783",
       about: "",
-      border: "leafy"
+      border: "leafy-border"
     }
   ]
 };
@@ -307,7 +380,8 @@ const pictureFullscreenClose = document.getElementById('picture-fullscreen-close
 let currentFolder = null;
 
 // Create vertical folder buttons (left panel)
-Object.keys(OC_DATA).forEach(folder => {
+const folderKeys = Object.keys(OC_DATA);
+folderKeys.forEach((folder, idx) => {
   const btn = document.createElement('button');
   btn.textContent = folder.replace(/_/g, ' ');
   btn.className = "folder-btn";
@@ -325,54 +399,99 @@ function renderOCs(folder) {
   ocsRoot.innerHTML = "";
   const ocsDiv = document.createElement('div');
   ocsDiv.className = "ocs-gallery";
-  OC_DATA[folder].forEach(oc => {
-    const card = document.createElement('div');
-    const borderType = oc.border || "gold";
-    card.className = [ "oc-card", borderType ].join(' ');
-    card.onclick = () => showModal(oc);
-    card.innerHTML = `
-      <img src="${oc.img}" alt="${oc.name}" class="oc-img" />
-      <div class="oc-name">${oc.name}</div>
-    `;
-    ocsDiv.appendChild(card);
-  });
+  // If folder has no items, show a friendly placeholder message
+  if (!OC_DATA[folder] || OC_DATA[folder].length === 0) {
+    const msg = document.createElement('div');
+    msg.style.padding = "36px";
+    msg.style.fontSize = "1.15rem";
+    msg.style.color = "#7a6a2f";
+    msg.textContent = "No OCs in this folder yet.";
+    ocsDiv.appendChild(msg);
+  } else {
+    OC_DATA[folder].forEach(oc => {
+      const card = document.createElement('div');
+      const borderType = oc.border || "gold-border";
+      card.className = [ "oc-card", borderType ].join(' ');
+      card.onclick = () => showModal(oc);
+      card.innerHTML = `
+        <img src="${oc.img}" alt="${oc.name}" class="oc-img" loading="lazy" />
+        <div class="oc-name">${oc.name}</div>
+      `;
+      ocsDiv.appendChild(card);
+    });
+  }
   ocsRoot.appendChild(ocsDiv);
 }
 
 // Show OC modal
 function showModal(oc) {
-  modalContent.className = (oc.border ? "modal-content " + oc.border : "modal-content gold");
+  // Ensure modal has proper border class
+  const borderClass = oc.border || "gold-border";
+  modalContent.className = "modal-content " + borderClass;
   modalContent.innerHTML = `
     <button class="close-btn" id="close-modal">Close</button>
     <h2 class="oc-name">${oc.name}</h2>
     <img src="${oc.img}" alt="${oc.name}" class="modal-img" id="modal-oc-img"/>
-    <p>${oc.about || "No description yet!"}</p>
+    <p style="color:#6b5b2b;">${oc.about || "No description yet!"}</p>
   `;
   modal.classList.add('active');
+  modal.setAttribute('aria-hidden', 'false');
   document.getElementById('close-modal').onclick = hideModal;
-  document.getElementById('modal-oc-img').onclick = function(e) {
-    showPictureFullscreen(oc.img);
-    e.stopPropagation();
-  };
+
+  // Add click listener for image in modal to open fullscreen view
+  const modalImg = document.getElementById('modal-oc-img');
+  if (modalImg) {
+    modalImg.onclick = function(e) {
+      showPictureFullscreen(oc.img);
+      e.stopPropagation();
+    };
+  }
 }
 
 // Hide modal
 function hideModal() {
   modal.classList.remove('active');
+  modal.setAttribute('aria-hidden', 'true');
 }
 
 // Picture fullscreen
 function showPictureFullscreen(imgUrl) {
   pictureFullscreenDiv.style.display = "flex";
+  pictureFullscreenDiv.setAttribute('aria-hidden', 'false');
   pictureFullscreenImg.src = imgUrl;
 }
 pictureFullscreenClose.onclick = function() {
   pictureFullscreenDiv.style.display = "none";
-}
+  pictureFullscreenDiv.setAttribute('aria-hidden', 'true');
+};
 
-// Optionally, open the first folder by default if you want:
-// renderOCs('plates_of_fate');
-// document.querySelectorAll('.folder-btn')[0].classList.add('selected');
+// Close modal or fullscreen when pressing Esc
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    hideModal();
+    pictureFullscreenDiv.style.display = "none";
+    pictureFullscreenDiv.setAttribute('aria-hidden', 'true');
+  }
+});
+
+// Optionally, open plates_of_fate by default and mark its button selected
+(function openDefault() {
+  const defaultFolder = 'plates_of_fate';
+  const btns = document.querySelectorAll('.folder-btn');
+  const idx = folderKeys.indexOf(defaultFolder);
+  if (idx >= 0 && btns[idx]) {
+    btns[idx].classList.add('selected');
+    renderOCs(defaultFolder);
+    currentFolder = defaultFolder;
+  } else {
+    // fallback: open first folder
+    if (btns[0]) {
+      btns[0].classList.add('selected');
+      renderOCs(folderKeys[0]);
+      currentFolder = folderKeys[0];
+    }
+  }
+})();
 </script>
 </body>
-</html>
+  </html>
